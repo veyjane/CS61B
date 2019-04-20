@@ -30,8 +30,8 @@ public class MyArray {
      * 遍历所有元素
      */
     public void display(){
-        for(int i=1;i<length;i++){
-            System.out.println(intArray[i] + "");
+        for(int i=0;i<elems;i++){
+            System.out.print(intArray[i] + " ");
         }
         System.out.println();
     }
@@ -52,4 +52,68 @@ public class MyArray {
         return true;
     }
 
+    /**
+     * 根据下标获取元素
+     * @param i
+     * @return 下标在有效范围内则返回下标所在元素
+     */
+    public int get(int i){
+        if (i<=-1||i>=elems){
+             System.out.println("访问下标越界");
+        }
+        return intArray[i];
+    }
+
+    /**
+     * 查找元素
+     * @param value
+     * @return 查找的元素存在返回下标值，查找元素不存在返回-1
+     */
+    public int find(int value){
+        int i; //i需要在循环外部声明
+        for (i = 0;i < elems;i++){
+            if (intArray[i]==value) break;
+        }
+        if(i==elems) return -1;
+        return i;
+    }
+
+    /**
+     *删除元素
+     * @param value
+     * @return 删除成功返回true,删除失败返回false
+     */
+    public boolean delete(int value){
+        int k = find(value);
+        if (k == -1){
+            return false;
+        }else {
+            if(k == elems-1){
+                elems--; //末尾直接删除
+            }else {
+                for (int i=k;i<elems;i++){ //下标从k到elems-1开始移动
+                    intArray[i]=intArray[i+1];
+                }
+                elems--;
+            }
+            return true;
+        }
+    }
+
+    /**
+     * 修改数据
+     * @param oldValue 原值
+     * @param newValue 新值
+     * @return 修改成功返回true，修改失败返回false
+     */
+    public boolean modify(int oldValue, int newValue){
+        int k = find(oldValue);
+        if(k == -1){
+            System.out.println("需要修改的数据不存在");
+            return  false;
+        }else{
+            intArray[k]=newValue;
+        }
+        return true;
+    }
 }
