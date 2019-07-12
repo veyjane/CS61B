@@ -1,4 +1,6 @@
-package basic;
+package basic.Array;
+
+import com.sun.org.apache.xpath.internal.functions.FuncFalse;
 
 public class MyArray {
     //定义一个数组
@@ -79,6 +81,28 @@ public class MyArray {
     }
 
     /**
+     *二分法查找
+     */
+    public int binaryFind(int value){
+        int lowerBound = 0;
+        int upperBound = elems-1;
+        int curIn = 0;
+        while (true){
+            curIn = (lowerBound+upperBound)/2;
+            if (intArray[curIn]==value){
+                return curIn;
+            }else if (lowerBound>upperBound){
+                return -1;//找不到value值
+            }else {
+                if (intArray[curIn]<value){
+                    lowerBound = curIn + 1;
+                }else upperBound = curIn +1;
+            }
+
+        }
+    }
+
+    /**
      *删除元素
      * @param value
      * @return 删除成功返回true,删除失败返回false
@@ -91,7 +115,7 @@ public class MyArray {
             if(k == elems-1){
                 elems--; //末尾直接删除
             }else {
-                for (int i=k;i<elems;i++){ //下标从k到elems-1开始移动
+                for (int i=k;i<elems-1;i++){ //下标从k到elems-1开始移动
                     intArray[i]=intArray[i+1];
                 }
                 elems--;
