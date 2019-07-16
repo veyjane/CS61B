@@ -144,12 +144,12 @@ public class BinaryTree implements Tree {
         } else {
             //当前存在两个节点
             Node successor = getSuccessor(current);
-            if (current == root){
+            if (current == root) {
                 root = successor;
             }
-            if (isLeftChild){
+            if (isLeftChild) {
                 parent.leftChild = successor;
-            }else {
+            } else {
                 parent.rightChild = successor;
             }
             successor.leftChild = current.leftChild;
@@ -161,12 +161,12 @@ public class BinaryTree implements Tree {
         Node successorParent = delNode;
         Node successor = delNode;
         Node current = delNode.rightChild;
-        while (current != null){
+        while (current != null) {
             successorParent = successor;
             successor = current;
             current = current.leftChild;
         }
-        if (successor != delNode.rightChild){
+        if (successor != delNode.rightChild) {
             successorParent.leftChild = successor.rightChild;
             successor.rightChild = delNode.rightChild;
         }
