@@ -1,13 +1,13 @@
 package basic.hash;
 
-public class MyhashTable {
+public class HashDouble {
     private DataItem[] hashArray; //DataItem类，表示每个数据项信息
     private int arraySize; //数组的初始大小
     private int nItem; //数组实际储存了多少数据
     private DataItem nonItem; //用于删除数据项
 
-    public MyhashTable(int arraySize){
-        this.arraySize = arraySize;
+    public HashDouble(int arraySize){
+        this.arraySize = 13;
         hashArray = new DataItem[arraySize];
         nonItem = new DataItem(-1); //删除的数据项下标为1
     }
@@ -34,8 +34,12 @@ public class MyhashTable {
     }
 
     //通过哈希函数转换得到数组下标
-    public int hashFunction(int key){
+    public int hashFunction1(int key){
         return key%arraySize;
+    }
+
+    public int hashFunction2(int key){
+        return 5 - key%5;
     }
 
     //插入数据项
@@ -45,9 +49,10 @@ public class MyhashTable {
             extandHashTable();
         }
         int key = item.getKey();
-        int hashVal = hashFunction(key);
+        int hashVal = hashFunction1(key);
+        int stepSize = hashFunction2(key);
         while(hashArray[hashVal] != null && hashArray[hashVal].getKey() != -1){
-            ++hashVal;
+            hashVal = hashVal + stepSize;
             hashVal = hashVal%arraySize;
         }
         hashArray[hashVal] = item;
@@ -75,7 +80,8 @@ public class MyhashTable {
             System.out.println("哈希表为空");
             return null;
         }
-        int hashVal = hashFunction(key);
+        int hashVal = hashFunction1(key);
+        int stepSize = hashFunction2(key);
         while (hashArray[hashVal] != null){
             if (hashArray[hashVal].getKey() == key){
                 DataItem temp = hashArray[hashVal];
@@ -83,7 +89,7 @@ public class MyhashTable {
                 nItem--;
                 return temp;
             }
-            hashVal++;
+            hashVal += stepSize;
             hashVal = hashVal%arraySize;
         }
         return null;
@@ -91,12 +97,13 @@ public class MyhashTable {
 
     //查找数据项
     public DataItem find(int key){
-        int hashVal = hashFunction(key);
+        int hashVal = hashFunction1(key);
+        int stepSize = hashFunction2(key);
         while (hashArray[hashVal] != null){
             if (hashArray[hashVal].getKey() != key){
                 return hashArray[hashVal];
             }
-            hashVal++;
+            hashVal += stepSize;
             hashVal = hashVal%arraySize;
         }
         return null;
